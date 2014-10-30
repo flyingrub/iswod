@@ -3,8 +3,8 @@ import speech_recognition as sr
 import pyaudio
 import wave
 import sys
-fail_counter=0
-MDP = 'abra'
+fail_counter=1
+MDP = 'jambon'
 
 def main():
     global fail_counter
@@ -16,7 +16,8 @@ def main():
         print("Verification en cours...")
         playaudio('verif.wav')
         try:
-            print("Vous avez dit : %s" % (r.recognize(audio)))
+            recognised=r.recognize(audio)
+            print("Vous avez dit : %s" % (recognised))
         except LookupError:
             while fail_counter < 3:
                 fail_counter += 1
@@ -27,7 +28,7 @@ def main():
             print('Nous n\'avons pas compris')
             sys.exit()
 
-    if MDP in r.recognize(audio).lower() :
+    if MDP in recognised.lower() :
         print('Autorisation en cours... ')
         playaudio('autorise.wav')
         #Open the door here
